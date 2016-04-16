@@ -1,33 +1,96 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'creditcard'
 require_relative '../lib/creditcard/purchase.rb'
 
-puts "What is the type of credit card?\n
-Enter 1 for Visa\n
-Enter 2 for MasterCard\n
-Enter 3 for Discover\n
-Enter 4 for American Express\n
-Enter q to quit"
-card_type = gets.chomp
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
 
-def get_credit_card_type(type)
-	while type != 'q'
-		case type
-		when '1'
-			break chosen_type = "visa"
-		when '2'
-			break chosen_type = "mastercard"
-		when '3'
-			break chosen_type = "discover"
-		when '4'
-			break chosen_type = "american Express"		
-		end
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+  end
+
+  opts.on("-r", "--require LIBRARY",
+	          "Require the LIBRARY before executing your script") do |lib|
+	  puts "You required #{lib}!"
+	  options[:required_lib] = lib
 	end
-end
 
-credit_type = get_credit_card_type(card_type)
-puts credit_type
+	# Validates card number
+	opts.on("-V", "--validate CARD_NUM", 
+					"Validate the credit card number") do |num|
+
+		# TODO check for card type
+		## Use the below authnetication chart.
+		#   +============+=============+===============+
+		#   | Card Type  | Begins With | Number Length |
+		#   +============+=============+===============+
+		#   | AMEX       | 34 or 37    | 15            |
+		#   +------------+-------------+---------------+
+		#   | Discover   | 6011        | 16            |
+		#   +------------+-------------+---------------+
+		#   | MasterCard | 51-55       | 16            |
+		#   +------------+-------------+---------------+
+		#   | Visa       | 4           | 13 or 16      |
+		#   +------------+-------------+---------------+
+		##
+		# TODO check arg length
+		# TODO check the starting numbers
+		if num.to_s.size === 15
+			card_type = "amex"
+		elsif num.to_s.size === 13
+			card_type = "visa"
+		elsif num.to_s.size === 16
+			card_type = "discover"
+			# TODO do logic to check what it begins with to 
+			# get if its discover, mastercard or visa
+		else
+			puts "Not a valid card number"
+		end
+				
+			
+		options[:card_number] = num
+		options[:card_type] = card_type
+	end
+
+end.parse!
+
+p options
+p ARGV
+
+# puts "What is the type of credit card?\n
+# Enter 1 for Visa\n
+# Enter 2 for MasterCard\n
+# Enter 3 for Discover\n
+# Enter 4 for American Express\n
+# Enter q to quit"
+# card_type = gets.chomp
+
+# def get_credit_card_type(type)
+# 	while type != 'q'
+# 		case type
+# 		when '1'
+# 			break chosen_type = "visa"
+# 		when '2'
+# 			break chosen_type = "mastercard"
+# 		when '3'
+# 			break chosen_type = "discover"
+# 		when '4'
+# 			break chosen_type = "american Express"		
+# 		end
+# 	end
+# end
+
+# credit_type = get_credit_card_type(card_type)
+# puts credit_type
+
+
+
+
+
+
 # puts "Proceed with card type {#{chosen_type}"
 
 # puts Purchase.new.test_method
