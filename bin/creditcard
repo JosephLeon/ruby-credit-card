@@ -2,3 +2,6 @@
 
 require 'creditcard'
 puts CreditCard.test
+
+puts "Enter some fake data"
+testinput = gets.chomp
