@@ -3,9 +3,31 @@
 require 'creditcard'
 require_relative '../lib/creditcard/purchase.rb'
 
-puts CreditCard.test
+puts "What is the type of credit card?\n
+Enter 1 for Visa\n
+Enter 2 for MasterCard\n
+Enter 3 for Discover\n
+Enter 4 for American Express\n
+Enter q to quit"
+card_type = gets.chomp
 
-puts "Enter some fake data"
-testinput = gets.chomp
+def get_credit_card_type(type)
+	while type != 'q'
+		case type
+		when '1'
+			break chosen_type = "visa"
+		when '2'
+			break chosen_type = "mastercard"
+		when '3'
+			break chosen_type = "discover"
+		when '4'
+			break chosen_type = "american Express"		
+		end
+	end
+end
 
-puts Purchase.new.test_method
+credit_type = get_credit_card_type(card_type)
+puts credit_type
+# puts "Proceed with card type {#{chosen_type}"
+
+# puts Purchase.new.test_method
