@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'creditcard'
+puts CreditCard.test
