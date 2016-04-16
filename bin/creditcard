@@ -6,7 +6,7 @@ require_relative '../lib/creditcard/purchase.rb'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: example.rb [options]"
+  opts.banner = "Usage: ruby -Ilib ./bin/creditcard [options]"
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
     options[:verbose] = v
@@ -43,12 +43,23 @@ OptionParser.new do |opts|
 		elsif num.to_s.size === 13
 			card_type = "visa"
 		elsif num.to_s.size === 16
-			card_type = "discover"
+			# card_type = "discover"
 			# TODO do logic to check what it begins with to 
 			# get if its discover, mastercard or visa
+			# "hello".start_with?("hell")
+			if num.to_s.start_with?("6011") 
+				card_type = "discover"
+			elsif num.to_s.start_with?("51") || num.to_s.start_with?("55")
+				card_type = "mastercard"
+			elsif num.to_s.start_with?("4")
+				card_type = "visa"
+			end
 		else
 			puts "Not a valid card number"
 		end
+
+		# OPTIMIZE remove the repeated to_s
+		# OPTIMIZE include start with in other size checks
 				
 			
 		options[:card_number] = num
