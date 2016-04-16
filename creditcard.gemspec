@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A sample gem for dealing with credit cards."
   s.authors     = ["Joseph Leon"]
   s.email       = ''
-  s.files       = ["lib/creditcard.rb"]
+  s.files       = ["lib/creditcard.rb, lib/creditcard/purchase.rb"]
   s.homepage    =
     'http://rubygems.org/gems/hola'
   s.license       = 'MIT'
