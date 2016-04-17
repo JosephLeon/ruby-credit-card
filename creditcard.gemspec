@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Joseph Leon"]
   s.email       = ''
   s.files       = ["lib/creditcard.rb, lib/creditcard/purchase.rb"]
-  s.homepage    =
-    'http://rubygems.org/gems/hola'
-  s.license       = 'MIT'
+  s.homepage    = ''
+  s.license     = 'MIT'
 end

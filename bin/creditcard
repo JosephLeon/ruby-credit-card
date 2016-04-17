@@ -92,4 +92,4 @@ p ARGV
 
 # puts "Proceed with card type {#{chosen_type}"
 
-# puts Purchase.new.test_method
+puts Purchase.new.test_method
