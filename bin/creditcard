@@ -2,7 +2,7 @@
 
 require 'optparse'
 require 'creditcard'
-require_relative '../lib/creditcard/purchase.rb'
+require 'creditcard/purchase'
 
 options = {}
 OptionParser.new do |opts|
@@ -22,43 +22,31 @@ OptionParser.new do |opts|
 	opts.on("-V", "--validate CARD_NUM", 
 					"Validate the credit card number") do |num|
 
-		# TODO check for card type
-		## Use the below authnetication chart.
-		#   +============+=============+===============+
-		#   | Card Type  | Begins With | Number Length |
-		#   +============+=============+===============+
-		#   | AMEX       | 34 or 37    | 15            |
-		#   +------------+-------------+---------------+
-		#   | Discover   | 6011        | 16            |
-		#   +------------+-------------+---------------+
-		#   | MasterCard | 51-55       | 16            |
-		#   +------------+-------------+---------------+
-		#   | Visa       | 4           | 13 or 16      |
-		#   +------------+-------------+---------------+
-		##
-		# TODO check arg length
-		# TODO check the starting numbers
-		if num.to_s.size === 15
-			card_type = "amex"
-		elsif num.to_s.size === 13
-			card_type = "visa"
-		elsif num.to_s.size === 16
-			# card_type = "discover"
-			# TODO do logic to check what it begins with to 
-			# get if its discover, mastercard or visa
-			# "hello".start_with?("hell")
-			if num.to_s.start_with?("6011") 
-				card_type = "discover"
-			elsif num.to_s.start_with?("51") || num.to_s.start_with?("55")
-				card_type = "mastercard"
-			elsif num.to_s.start_with?("4")
+		if num.size === 15
+			if num.start_with?("34") || num.start_with?("37")
+				card_type = "amex"
+			else
+				puts "Not a valid card number"
+			end
+		elsif num.size === 13
+			if num.start_with?("4")
 				card_type = "visa"
+			else
+				puts "Not a valid card number"
+			end
+		elsif num.size === 16
+			if num.start_with?("6011") 
+				card_type = "discover"
+			elsif num.start_with?("51") || num.start_with?("55")
+				card_type = "mastercard"
+			elsif num.start_with?("4")
+				card_type = "visa"
+			else
+				puts "Not a valid card number"
 			end
 		else
 			puts "Not a valid card number"
 		end
-
-		# OPTIMIZE remove the repeated to_s
 		# OPTIMIZE include start with in other size checks
 				
 			
